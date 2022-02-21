@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Button, Form } from "react-bootstrap";
 import {
   incrementLikes,
   deleteBlog,
@@ -36,29 +37,42 @@ const Blog = () => {
   return (
     <div>
       <h1>
-        {blog.title} {blog.author}
+        {blog.title} by {blog.author}
       </h1>
-      <a href={`http://${blog.url}`}>{blog.url}</a>
       <p>
-        {blog.likes} likes
-        <button className="like-button" onClick={handleLike}>
-          like
-        </button>
+        <a href={`http://${blog.url}`}>Open Blog</a>
       </p>
-      <div>added by {blog.user.username}</div>
-      {user.username === blog.user.username && (
-        <button onClick={handleDelete}>remove</button>
-      )}
-      <h3>comments</h3>
-      <ul>
+      <p>
+        {blog.likes} Likes
+        {user && (
+          <Button className="mx-2 like-button" onClick={handleLike}>
+            Like
+          </Button>
+        )}
+      </p>
+      <p>
+        Added by {blog.user.username}{" "}
+        {user && user.username === blog.user.username && (
+          <Button onClick={handleDelete}>Remove</Button>
+        )}
+      </p>
+
+      <h3>Comments:</h3>
+      <ul className="list-group">
         {blog.comments.map((comment, index) => (
-          <li key={index}>{comment}</li>
+          <li key={index} className="list-group-item">
+            {comment}
+          </li>
         ))}
       </ul>
-      <form onSubmit={handleComment}>
-        <input name="comment" type="text" />
-        <button type="submit">add comment</button>
-      </form>
+      {user && (
+        <Form className="my-2" onSubmit={handleComment}>
+          <Form.Control type="text" name="comment" />
+          <Button className="my-2" variant="primary" type="submit">
+            Add Comment
+          </Button>
+        </Form>
+      )}
     </div>
   );
 };

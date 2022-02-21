@@ -5,6 +5,7 @@ import { Table } from "react-bootstrap";
 import { createBlog } from "../reducers/blogsReducer";
 import Togglable from "./Togglable";
 import BlogForm from "./BlogForm";
+import CurrentUser from "./CurrentUser";
 
 const Blogs = () => {
   const user = useSelector((state) => state.user);
@@ -19,35 +20,38 @@ const Blogs = () => {
 
   return (
     <div>
+      <h1>Blogs</h1>
+      <CurrentUser />
       {user && (
         <div>
           <Togglable
-            buttonText="create new blog"
+            buttonText="Create New Blog"
             openByDefault={false}
             ref={blogFormRef}
           >
             <BlogForm createNewBlog={handleNewBlog} />
           </Togglable>
           <br></br>
-          <Table striped>
-            <tbody>
-              {blogs.map((blog) => (
-                <tr key={blog.id}>
-                  <td>
-                    <Link
-                      to={`/blogs/${blog.id}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      {blog.title}
-                    </Link>
-                  </td>
-                  <td>{blog.author}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
         </div>
       )}
+      <Table striped bordered>
+        <thead>
+          <tr>
+            <td>Blog</td>
+            <td>Added by</td>
+          </tr>
+        </thead>
+        <tbody>
+          {blogs.map((blog) => (
+            <tr key={blog.id}>
+              <td>
+                <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+              </td>
+              <td>{blog.author}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 };

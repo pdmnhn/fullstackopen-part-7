@@ -1,44 +1,34 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
 import { Form, Button } from "react-bootstrap";
 
 const BlogForm = ({ createNewBlog }) => {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setUrl] = useState("");
-
   const submit = (event) => {
     event.preventDefault();
+    const title = event.target.title.value;
+    const author = event.target.author.value;
+    const url = event.target.url.value;
+    event.target.title.value =
+      event.target.author.value =
+      event.target.url.value =
+        "";
     createNewBlog(title, author, url);
-    setTitle("");
-    setAuthor("");
-    setUrl("");
   };
 
-  const changeState = (setState) => {
-    return ({ target }) => {
-      setState(target.value);
-    };
-  };
   return (
     <div>
-      <h2>create new</h2>
-      <Form onSubmit={submit}>
-        <div>
-          title:
-          <input id="title" value={title} onChange={changeState(setTitle)} />
-        </div>
-        <div>
-          author:
-          <input id="author" value={author} onChange={changeState(setAuthor)} />
-        </div>
-        <div>
-          url:
-          <input id="url" value={url} onChange={changeState(setUrl)} />
-        </div>
-        <button id="create-button" type="submit">
-          create
-        </button>
+      <h2>Create New</h2>
+      <Form onSubmit={submit} className="my-2">
+        <Form.Group>
+          <Form.Label>Title:</Form.Label>
+          <Form.Control type="text" name="title" />
+          <Form.Label>Author:</Form.Label>
+          <Form.Control type="text" name="author" />
+          <Form.Label>URL:</Form.Label>
+          <Form.Control type="text" name="url" />
+          <Button className="mt-2" classvariant="primary" type="submit">
+            Create
+          </Button>
+        </Form.Group>
       </Form>
     </div>
   );

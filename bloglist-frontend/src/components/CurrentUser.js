@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "react-bootstrap";
 import { userLogin, userLogout } from "../reducers/userReducer";
 import Togglable from "./Togglable";
 import LoginForm from "./LoginForm";
@@ -14,23 +15,18 @@ const CurrentUser = () => {
     dispatch(userLogout());
   };
 
+  if (user) {
+    return (
+      <Button variant="secondary" onClick={handleLogout}>
+        Logout
+      </Button>
+    );
+  }
+
   return (
-    <div>
-      {!user && (
-        <Togglable buttonText="log in" openByDefault={true}>
-          <LoginForm handleLogin={handleLogin} />
-        </Togglable>
-      )}
-      {user && (
-        <div>
-          <h2>blogs</h2>
-          <p>
-            {user.username} logged in{" "}
-            <button onClick={handleLogout}>logout</button>
-          </p>
-        </div>
-      )}
-    </div>
+    <Togglable buttonText="Login" openByDefault={true}>
+      <LoginForm handleLogin={handleLogin} />
+    </Togglable>
   );
 };
 

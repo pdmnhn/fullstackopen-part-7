@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Table } from "react-bootstrap";
 import { initializeUsers } from "../reducers/allUsersReducer";
 
 const Users = () => {
@@ -14,11 +15,11 @@ const Users = () => {
   return (
     <div>
       <h1>Users</h1>
-      <table>
+      <Table striped bordered>
         <thead>
           <tr>
             <th>Name</th>
-            <th>blogs created</th>
+            <th>Blogs created</th>
           </tr>
         </thead>
         <tbody>
@@ -31,7 +32,7 @@ const Users = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };
